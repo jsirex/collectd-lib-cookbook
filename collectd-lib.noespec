@@ -1,0 +1,55 @@
+template-info:
+
+  # Don't remove the name and version entries, which are ALWAYS required
+  name: "chef-cookbook"
+  version: 1.0.0
+
+  # The following entries are information about the template itself and can safely
+  # be removed on your own project.
+  summary: |
+    Template for creating a chef cookbook
+  description: |
+    This is a [Noe](https://github.com/blambeau/noe) template for creating a chef cookbook.
+  authors:
+    - {name: Yauhen Artsiukhou, email: jsirex@gmail.com}
+  links:
+    source: https://github.com/jsirex/chef-cookbook.noe/tree/master
+
+  manifest:
+    spec/spec_helper.rb:
+      description: ChefSpec helper
+      safe-override: true
+
+    .gitignore:
+      description: Files to be ignored by git or another version control system
+      safe-override: true
+
+    .rubocop.yml:
+      description: Rubocop settings
+      safe-override: true
+
+    Gemfile:
+      description: Gemfile
+      safe-override: true
+
+    Rakefile:
+      description: Rakefile
+      safe-override: true
+
+    chefignore:
+      description: Files to be ignored by chef
+      safe-override: true
+
+# The following entries are template-related variables. Update to match your
+# own configuration.
+variables:
+  # A lower case cookbook name
+  name: collectd-lib
+  maintainer: Yauhen Artsiukhou
+  maintainer_email: jsirex@gmail.com
+  license: Apache 2.0
+  description: Install and configure the collectd monitoring daemon
+  long_description: Install and configure the collectd monitoring daemon
+  issues_url: https://github.com/jsirex/cookbook-collectd.git
+  source_url: https://github.com/jsirex/cookbook-collectd/issues
+  version: 2.1.2

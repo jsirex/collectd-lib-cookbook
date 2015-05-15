@@ -1,0 +1,31 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+
+platforms:
+  - name: chef/debian-7.7
+    platform: debian
+    driver_config:
+      provision_command:
+        - apt-get -y install build-essential
+
+  - name: chef/debian-8
+    platform: debian
+    driver_config:
+      provision_command:
+        - apt-get -y install build-essential
+
+#  - name: chef/centos-7.0
+
+
+suites:
+  # Wrapper Test
+  - name: default
+    run_list:
+      - recipe[collectd-lib-test]
+    attributes:
+

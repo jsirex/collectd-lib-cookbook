@@ -1,0 +1,34 @@
+AllCops:
+  Include:
+    - Gemfile
+    - attributes/**/*
+    - recipes/**/*
+    - libraries/**/*
+    - providers/**/*
+    - resources/**/*
+  Exclude:
+    - metadata.rb
+    - test/**/*
+    - vendor/**/*
+    - .berkshelf/cookbooks/**/*
+
+Encoding:
+  Enabled: false
+
+LineLength:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+NumericLiterals:
+  Enabled: false
+
+HashSyntax:
+  Enabled: false
+
+RescueModifier:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 30
