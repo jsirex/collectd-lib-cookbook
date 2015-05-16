@@ -31,4 +31,7 @@ RescueModifier:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 30
+  Max: 60
+
+Style/Documentation:
+  Enabled: false

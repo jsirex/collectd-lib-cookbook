@@ -7,7 +7,6 @@ default['collectd']['base_dir'] = '/var/lib/collectd'
 default['collectd']['plugin_dir'] = '/usr/lib/collectd'
 default['collectd']['extra_conf_dir'] = '/etc/collectd/colectd.conf.d'
 
-
 # Base Configuration
 default['collectd']['types_db'] = ['/usr/share/collectd/types.db']
 default['collectd']['interval'] = 10

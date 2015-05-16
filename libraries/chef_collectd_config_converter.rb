@@ -10,7 +10,7 @@ module ChefCollectd
         when Symbol
           k.to_s
         else
-          raise TypeError, "Unexpected key `#{k.inspect}` of type `#{k.class}`."
+          fail TypeError, "Unexpected key `#{k.inspect}` of type `#{k.class}`."
         end
       end
 
@@ -21,49 +21,54 @@ module ChefCollectd
         when String
           "\"#{v}\""
         when Array
-          v.map{ |x| collectd_value(x) }.join(' ')
+          v.map { |x| collectd_value(x) }.join(' ')
         else
-          raise TypeError, "Unexpected value `#{v.inspect}` of type `#{v.class}`."
+          fail TypeError, "Unexpected value `#{v.inspect}` of type `#{v.class}`."
         end
       end
 
+      def indent_str(str, level = 0)
+        str.split("\n").map { |s| "#{SPACER * level}#{s}" }.join("\n")
+      end
+
       # Builds a collect section
+      # @param [String, Symbol, Array] key
+      # @param [String] content
       def collectd_section(key, content, level = 0)
-        indent = SPACER * level
+        return '' if content.nil? || content.empty?
+
         output = []
         case key
         when String, Symbol
-          output << "#{indent}<#{collectd_key(key)}>"
-          output << content
-          output << "#{indent}</#{collectd_key(key)}>"
+          output << indent_str("<#{collectd_key(key)}>", level)
+          output << indent_str(content, level + 1)
+          output << indent_str("</#{collectd_key(key)}>", level)
         when Array
-          output << "#{indent}<#{collectd_key(key[0])} #{collectd_value(key[1])}>"
-          output << content
-          output << "#{indent}</#{collectd_key(key[0])}>"
+          output << indent_str("<#{collectd_key(key[0])} #{collectd_value(key[1])}>", level)
+          output << indent_str(content, level + 1)
+          output << indent_str("</#{collectd_key(key[0])}>", level)
         end
-
         output.join("\n")
       end
 
       def from_hash(h, level = 0)
-        raise TypeError, "`#{h.inspect}` is not Hash . This is `#{h.class}`" unless h.is_a? Hash
+        fail TypeError, "`#{h.inspect}` is not Hash . This is `#{h.class}`" unless h.is_a? Hash
 
-        indent = SPACER * level
         output = []
 
         h.each_pair do |key, value|
           case value
           when Hash
             # We are in section
-            content = from_hash(value, level + 1)
+            content = from_hash(value)
             output << collectd_section(key, content, level)
           when Array
             # Multiple repeation
             value.each do |subvalue|
-              output << "#{indent}#{collectd_key(key)} #{collectd_value(subvalue)}"
+              output << indent_str("#{collectd_key(key)} #{collectd_value(subvalue)}")
             end
           else
-            output << "#{indent}#{collectd_key(key)} #{collectd_value(value)}"
+            output << indent_str("#{collectd_key(key)} #{collectd_value(value)}")
           end
         end
 
@@ -74,7 +79,7 @@ module ChefCollectd
         output = []
 
         tuples = transform(resources)
-        plugin_tuples = tuples.select {|t| t[:plugin]}
+        plugin_tuples = tuples.select { |t| t[:plugin] }
         conf_tuples = tuples - plugin_tuples
 
         conf_tuples = priority_sort(conf_tuples, :priority) # sort only by priority
@@ -84,8 +89,8 @@ module ChefCollectd
 
         plugin_names.each do |plugin_name|
           key = %W(Plugin #{plugin_name})
-          plugins = plugin_tuples.select {|t| t[:plugin_name] == plugin_name}
-          merged_plugins = plugins.select {|p| p[:merge]}
+          plugins = plugin_tuples.select { |t| t[:plugin_name] == plugin_name }
+          merged_plugins = plugins.select { |p| p[:merge] }
           standalone_plugins = plugins - merged_plugins
 
           # Plugin attribute may be hash. It is additional configuration for LoadPlugin Section
@@ -102,7 +107,7 @@ module ChefCollectd
 
           unless merged_plugins.empty?
             # Writting down all configuration one by one inside section
-            content = merged_plugins.map {|mp| from_hash(mp[:conf], 1)}.join("\n")
+            content = merged_plugins.map { |mp| from_hash(mp[:conf]) }.join("\n")
             output << collectd_section(key, content)
           end
 
@@ -122,7 +127,7 @@ module ChefCollectd
       end
 
       def find_plugin_names(tuples)
-        tuples.map {|t| t[:plugin_name]}.uniq
+        tuples.map { |t| t[:plugin_name] }.uniq
       end
 
       def transform(res)
@@ -132,8 +137,6 @@ module ChefCollectd
                  r.plugin
                when Hash
                  r.plugin.keys.first
-               else
-                 nil
                end
 
           {
@@ -147,9 +150,8 @@ module ChefCollectd
       end
 
       def priority_sort(tuples, key)
-        tuples.sort { |x,y| x[:priority] == y[:priority] ? x[key] <=> y[key] : x[:priority] <=> y[:priority] }
+        tuples.sort { |x, y| x[:priority] == y[:priority] ? x[key] <=> y[key] : x[:priority] <=> y[:priority] }
       end
-
     end
   end
 end

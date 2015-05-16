@@ -65,18 +65,15 @@ class Chef
         content << "################################\n"
         content << "# Extra Configuration Include  #\n"
         content << "################################\n\n"
-        content << ChefCollectd::ConfigConverter.from_hash(%W(Include #{new_resource.extra_conf_dir}) => { 'Filter' => '*.conf'})
+        content << ChefCollectd::ConfigConverter.from_hash(%W(Include #{new_resource.extra_conf_dir}) => { 'Filter' => '*.conf' })
         content << "\n"
 
         file_resource.content content
 
         file_resource.run_action(:create)
 
-        if file_resource.updated_by_last_action?
-          new_resource.updated_by_last_action(true)
-        end
+        new_resource.updated_by_last_action(true) if file_resource.updated_by_last_action?
       end
     end
   end
-
 end
