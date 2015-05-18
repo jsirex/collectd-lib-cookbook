@@ -21,6 +21,8 @@ class Chef
       end
 
       def conf(arg = nil)
+        validate_conf!(arg) if arg
+
         set_or_return(:conf, arg, :kind_of => [Hash])
       end
 
@@ -34,6 +36,12 @@ class Chef
 
       def merge(arg = nil)
         set_or_return(:merge, arg, :kind_of => [TrueClass, FalseClass])
+      end
+
+      def validate_conf!(conf)
+        ChefCollectd::ConfigConverter.from_hash(conf)
+      rescue TypeError => e
+        raise ArgumentError, "#{self} (#{defined_at}) wrong configuration: #{conf}. #{e}"
       end
     end
   end
