@@ -6,6 +6,6 @@ DEPENDENCIES
     path: test/fixtures/cookbooks/collectd-lib-test
 
 GRAPH
-  collectd-lib (3.0.0)
+  collectd-lib (3.0.1)
   collectd-lib-test (0.0.0)
     collectd-lib (>= 0.0.0)

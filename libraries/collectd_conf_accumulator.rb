@@ -46,7 +46,12 @@ class Chef
       def action_create
         file_resource = run_context.resource_collection.find(:file => new_resource.name)
         conf_resources = run_context.resource_collection.select do |x|
-          x.resource_name == new_resource.collect && Array(x.action).include?(:create)
+          x.resource_name == new_resource.collect && Array(x.action).include?(:create) && !x.should_skip?(:create)
+        end
+
+        conf_resources.each do |res|
+          Chef::Log.debug("========= Collectd Conf: #{res.name} ============")
+          Chef::Log.debug(res.conf.inspect)
         end
 
         content = "# This file is managed by Chef, your changes *will* be overwritten!\n\n"
