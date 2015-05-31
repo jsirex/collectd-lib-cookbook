@@ -5,7 +5,7 @@ default['collectd']['packages'] = %w(collectd-core)
 default['collectd']['conf_dir'] = '/etc/collectd'
 default['collectd']['base_dir'] = '/var/lib/collectd'
 default['collectd']['plugin_dir'] = '/usr/lib/collectd'
-default['collectd']['extra_conf_dir'] = '/etc/collectd/colectd.conf.d'
+default['collectd']['extra_conf_dir'] = '/etc/collectd/collectd.conf.d'
 
 # Base Configuration
 default['collectd']['types_db'] = ['/usr/share/collectd/types.db']
