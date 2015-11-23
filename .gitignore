@@ -17,3 +17,5 @@ bin/*
 .berkshelf/
 reports/
 .yardoc/
+Berksfile.lock
+Gemfile.lock
