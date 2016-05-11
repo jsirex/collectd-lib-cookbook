@@ -10,7 +10,7 @@ module ChefCollectd
         when Symbol
           k.to_s
         else
-          fail TypeError, "Unexpected key `#{k.inspect}` of type `#{k.class}`."
+          raise TypeError, "Unexpected key `#{k.inspect}` of type `#{k.class}`."
         end
       end
 
@@ -23,7 +23,7 @@ module ChefCollectd
         when Array
           v.map { |x| collectd_value(x) }.join(' ')
         else
-          fail TypeError, "Unexpected value `#{v.inspect}` of type `#{v.class}`."
+          raise TypeError, "Unexpected value `#{v.inspect}` of type `#{v.class}`."
         end
       end
 
@@ -52,7 +52,7 @@ module ChefCollectd
       end
 
       def from_hash(h, level = 0)
-        fail TypeError, "`#{h.inspect}` is not Hash . This is `#{h.class}`" unless h.is_a? Hash
+        raise TypeError, "`#{h.inspect}` is not Hash . This is `#{h.class}`" unless h.is_a? Hash
 
         output = []
 
@@ -143,7 +143,7 @@ module ChefCollectd
             :priority => r.priority,
             :conf => r.conf,
             :plugin => r.plugin,
-            :plugin_name =>  pn,
+            :plugin_name => pn,
             :merge => r.merge
           }
         end

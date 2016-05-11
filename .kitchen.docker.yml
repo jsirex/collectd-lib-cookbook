@@ -6,7 +6,7 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: debian-7.7
+  - name: debian-7.9
     driver_config:
       require_chef_omnibus: false
       provision_command:

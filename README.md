@@ -237,12 +237,11 @@ This cookbook heavy refactored but still not well tested. Also it supports only 
 
 ## Platform:
 
-* Debian
-* Ubuntu
+* debian
+* ubuntu
 
 ## Cookbooks:
 
-* apt (Suggested but not required)
 * Conflicts with collectd
 
 # Attributes
@@ -251,7 +250,7 @@ This cookbook heavy refactored but still not well tested. Also it supports only 
 * `node['collectd']['conf_dir']` -  Defaults to `/etc/collectd`.
 * `node['collectd']['base_dir']` -  Defaults to `/var/lib/collectd`.
 * `node['collectd']['plugin_dir']` -  Defaults to `/usr/lib/collectd`.
-* `node['collectd']['extra_conf_dir']` -  Defaults to `/etc/collectd/colectd.conf.d`.
+* `node['collectd']['extra_conf_dir']` -  Defaults to `/etc/collectd/collectd.conf.d`.
 * `node['collectd']['types_db']` -  Defaults to `[ ... ]`.
 * `node['collectd']['interval']` -  Defaults to `10`.
 * `node['collectd']['timeout']` -  Defaults to `2`.
@@ -272,5 +271,7 @@ This cookbook heavy refactored but still not well tested. Also it supports only 
 # License and Maintainer
 
 Maintainer:: Yauhen Artsiukhou (<jsirex@gmail.com>)
+Source:: https://github.com/jsirex/collectd-lib-cookbook
+Issues:: https://github.com/jsirex/collectd-lib-cookbook/issues
 
 License:: Apache 2.0

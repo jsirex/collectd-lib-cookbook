@@ -2,7 +2,7 @@ template-info:
 
   # Don't remove the name and version entries, which are ALWAYS required
   name: "chef-cookbook"
-  version: 1.0.0
+  version: 1.3.0
 
   # The following entries are information about the template itself and can safely
   # be removed on your own project.

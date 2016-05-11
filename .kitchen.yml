@@ -1,19 +1,20 @@
 ---
 driver:
   name: vagrant
+  customize:
+    cpus: 2
+    memory: 1024
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: latest
+  chef_client_path: /usr/bin/chef-client
+  require_chef_omnibus: 12.6.0
+
+transport:
+  name: sftp
 
 platforms:
-  - name: chef/debian-7.7
-    platform: debian
-    driver_config:
-      provision_command:
-        - apt-get -y install build-essential
-
-  - name: chef/debian-8
+  - name: debian-7.9
     platform: debian
     driver_config:
       provision_command:
