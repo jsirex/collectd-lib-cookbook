@@ -7,7 +7,7 @@ description      'Install and configure the collectd monitoring daemon'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 issues_url       'https://github.com/jsirex/collectd-lib-cookbook/issues'
 source_url       'https://github.com/jsirex/collectd-lib-cookbook'
-version          '3.0.2'
+version          '3.1.0'
 
 supports 'debian'
 supports 'ubuntu'
