@@ -75,25 +75,35 @@ describe ChefCollectd::ConfigConverter do
         'Key' => 'value',
         'Arrays' => [1, 2, true, 'str', [5, 6, 7], %w(s s2), false, ''],
         'Sec' => { 'k' => 'v' },
-        %w(Sec2 attr) => { 'kk' => %w(v v v) }
+        %w(Sec2 attr) => { 'kk' => %w(v v v) },
+        %w(Multi section) => [
+          { 'k1' => 'v1' },
+          { 'k2' => 'v2' }
+        ]
       }
-      result = "Key \"value\"
+      result = 'Key "value"
 Arrays 1
 Arrays 2
 Arrays true
-Arrays \"str\"
+Arrays "str"
 Arrays 5 6 7
-Arrays \"s\" \"s2\"
+Arrays "s" "s2"
 Arrays false
-Arrays \"\"
+Arrays ""
 <Sec>
-        k \"v\"
+        k "v"
 </Sec>
-<Sec2 \"attr\">
-        kk \"v\"
-        kk \"v\"
-        kk \"v\"
-</Sec2>"
+<Sec2 "attr">
+        kk "v"
+        kk "v"
+        kk "v"
+</Sec2>
+<Multi "section">
+        k1 "v1"
+</Multi>
+<Multi "section">
+        k2 "v2"
+</Multi>'
       expect(described_class.from_hash(hash)).to eq(result)
     end
   end
