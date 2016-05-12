@@ -99,6 +99,27 @@ Result:
 </Section>
 ```
 
+If **key** is a *String* and **value** is an *Array* of *Hash* it produces multiple sections with the same name.
+```ruby
+collectd_conf 'string-hash-array' do
+  conf 'Section' => [
+    {'Key1' => 'Value1'},
+    {'Key2' => 'Value2'}
+  ]
+end
+```
+
+Result:
+
+```
+<Section>
+  Key1 "Value1"
+</Section>
+<Section>
+  Key2 "Value2"
+</Section>
+```
+
 If **key** is a *Array* and **value** is a *Hash* it produces section with `key[0]` name and attribute `key[1]`.
 
 ```ruby

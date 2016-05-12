@@ -65,7 +65,12 @@ module ChefCollectd
           when Array
             # Multiple repeation
             value.each do |subvalue|
-              output << indent_str("#{collectd_key(key)} #{collectd_value(subvalue)}")
+              if subvalue.is_a?(Hash)
+                content = from_hash(subvalue)
+                output << collectd_section(key, content, level)
+              else
+                output << indent_str("#{collectd_key(key)} #{collectd_value(subvalue)}")
+              end
             end
           else
             output << indent_str("#{collectd_key(key)} #{collectd_value(value)}")
