@@ -78,7 +78,13 @@ describe ChefCollectd::ConfigConverter do
         %w(Sec2 attr) => { 'kk' => %w(v v v) },
         %w(Multi section) => [
           { 'k1' => 'v1' },
-          { 'k2' => 'v2' }
+          {
+            'k2' => 'v2',
+            'm2' => [
+              {'a' => 'b'},
+              {'c' => 'd'}
+            ]
+          }
         ]
       }
       result = 'Key "value"
@@ -103,6 +109,12 @@ Arrays ""
 </Multi>
 <Multi "section">
         k2 "v2"
+        <m2>
+                a "b"
+        </m2>
+        <m2>
+                c "d"
+        </m2>
 </Multi>'
       expect(described_class.from_hash(hash)).to eq(result)
     end
